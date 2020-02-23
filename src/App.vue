@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Products from "./components/Products.vue"
+import Products from "./views/Products"
 
 export default {
   name: "App",
