@@ -1,25 +1,25 @@
 <template>
   <b-container>
-    <h2 class="mt-4">Products</h2>
+    <h2 class="my-3">Products</h2>
     <b-row>
-      <b-col cols="11">
-        <b-table outlined head-variant="gray" striped hover :items="products"></b-table>
+      <b-col cols="10">
+        <b-table  outlined head-variant="gray" striped hover :items="products"></b-table>
       </b-col>
-      <b-col cols="1" class="mt-5">
+      <b-col cols="2" class="mt-5">
         <div v-for="product in products" :key="product.title">
           <b-button @click="editItem(product)" class="mt-2 px-3" variant="outline-dark">EDIT</b-button>
         </div>
       </b-col>
     </b-row>
     <b-row>
-      <b-col md="3" offset-md="9">
+      <b-col md="3" offset-md="7" co>
         <b-button
-          id="show-btn"
-          @click="showModal"
+          block
+          @click="modalShow = !modalShow"
           class="mt-2 px-3"
           variant="outline-dark"
         >ADD PRODUCT</b-button>
-        <b-modal ref="my-modal" hide-footer :title="formTitle">
+        <b-modal v-model="modalShow" hide-footer :title="formTitle">
           <b-card>
             <div>
               <b-form @submit="save" @reset="onReset">
@@ -35,7 +35,7 @@
                   ></b-form-input>
                 </b-form-group>
 
-                <b-form-group label="Price">
+                <b-form-group label="Price($)">
                   <b-form-input
                     v-model="editedItem.price"
                     type="number"
@@ -62,18 +62,17 @@
 <script>
 export default {
   data: () => ({
-    dialog: false,
+    modalShow: false,
     products: [],
-    items: [],
     editedIndex: -1,
     editedItem: {
       title: "",
-      description: 0,
+      description: "",
       price: 0
     },
     defaultItem: {
       title: "",
-      description: 0,
+      description: "",
       price: 0
     }
   }),
@@ -85,7 +84,7 @@ export default {
   },
 
   watch: {
-    dialog(val) {
+    modalShow(val) {
       val || this.close();
     }
   },
@@ -95,24 +94,27 @@ export default {
   },
 
   methods: {
+    
     initialize() {
       this.products = [
         {
           title: "Apple",
           description: "A sweet, edible fruit produced by an apple tree",
-          price: 1.5
+          price: 1
         },
         {
           title: "Banana",
           description:
             "An edible fruit - botanically a berry - produced by large flowering plants",
-          price: 0.6
+          price: 2
         }
       ];
     },
+    
     showModal() {
-      this.$refs["my-modal"].show();
+      this.modalShow = true
     },
+
     editItem(product) {
       this.showModal();
       this.editedIndex = this.products.indexOf(product);
@@ -121,7 +123,7 @@ export default {
     },
 
     close() {
-      this.$refs["my-modal"].hide();
+      this.modalShow = false
       setTimeout(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
@@ -136,6 +138,7 @@ export default {
       }
       this.close();
     },
+
     onReset(evt) {
       evt.preventDefault();
       this.editedItem.title = "";
@@ -145,6 +148,3 @@ export default {
   }
 };
 </script>
-
-<style>
-</style>
