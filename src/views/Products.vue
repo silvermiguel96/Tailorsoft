@@ -41,12 +41,12 @@
                   <b-form-input
                     id="input-live"
                     v-model="editedItem.price"
-                    :state="nameState"
+                    :state="isPriceValid"
                     type="text"
                     required
                     placeholder="Enter Price"
                   ></b-form-input>
-                  <b-form-invalid-feedback id="input-live-feedback">The price must be greater than 1</b-form-invalid-feedback>
+                  <b-form-invalid-feedback id="input-live-feedback">The price must be greater than 0</b-form-invalid-feedback>
                 </b-form-group>
 
                 <b-row>
@@ -55,7 +55,7 @@
                     <b-button
                       type="submit"
                       class="mx-1 px-3"
-                      v-if="nameState"
+                      v-if="isPriceValid"
                       variant="outline-dark"
                     >SAVE</b-button>
                     <b-button
@@ -98,7 +98,7 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
     },
-    nameState() {
+    isPriceValid() {
       return this.editedItem.price > 0 ? true : false;
     }
   },
