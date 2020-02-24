@@ -143,10 +143,8 @@ export default {
 
     close() {
       this.modalShow = false;
-      setTimeout(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      }, 300);
+      this.editedItem = Object.assign({}, this.defaultItem);
+      this.editedIndex = -1;
     },
 
     save() {
